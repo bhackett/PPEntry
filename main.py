@@ -3,6 +3,7 @@
 # https://www.youtube.com/playlist?list=PLfZw_tZWahjxz8pbtxqjNQvuNPZEM25Qm
 import tkinter
 from tkinter import ttk
+
 from ttkbootstrap import Style
 
 
@@ -10,10 +11,10 @@ class Application(tkinter.Tk):
 
     def __init__(self):
         super().__init__()
-        self.title('Populated Places')
+        self.title('Simple data entry form')
         self.style = Style('darkly')
         self.form = EntryForm(self)
-        self.form.pack(fill='both', expand=1)
+        self.form.pack(fill='both', expand=True)
 
 
 class EntryForm(ttk.Frame):
@@ -26,14 +27,14 @@ class EntryForm(ttk.Frame):
         # form variables
         self.fsurl = tkinter.StringVar(value='', name='fsurl')
         self.fagurl = tkinter.StringVar(value='', name='fagurl')
-        self.pplegacyurl = tkinter.StringVar(value='', name='pplegacyurl')
-        self.oldestyear = tkinter.StringVar(value='', name='oldestyear')
+        self.plurl = tkinter.StringVar(value='', name='plurl')
+        self.oldgrave = tkinter.StringVar(value='', name='oldgrave')
 
         # form headers
         ttk.Label(self, text='Please enter Populated Places information', width=60).grid(columnspan=3, pady=10)
 
         # create label/entry rows
-        for i, label in enumerate(['FamilySearch Url', 'FindAGrave URL', 'PeopleLegacy URL', 'Oldest Grave']):
+        for i, label in enumerate(['fsurl', 'fagurl', 'plurl', 'oldgrave']):
             ttk.Label(self, text=label.title()).grid(row=i + 1, column=0, sticky='ew', pady=10, padx=(0, 10))
             ttk.Entry(self, textvariable=label).grid(row=i + 1, column=1, columnspan=2, sticky='ew')
 
@@ -46,7 +47,7 @@ class EntryForm(ttk.Frame):
         self.cancel.grid(row=5, column=1, sticky='ew')
 
     def print_form_data(self):
-        print(self.fsurl.get(), self.fagurl.get(), self.pplegacyurl.get(), self.oldestyear.get())
+        print(self.fsurl.get(), self.fagurl.get(), self.plurl.get(), self.oldgrave.get())
 
 
 if __name__ == '__main__':
