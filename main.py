@@ -3,8 +3,12 @@
 # https://www.youtube.com/playlist?list=PLfZw_tZWahjxz8pbtxqjNQvuNPZEM25Qm
 import tkinter
 from tkinter import ttk
-
 from ttkbootstrap import Style
+
+from utils import person
+from utils import io
+
+FS_URL = r'https://www.familysearch.org/tree/pedigree/landscape/'  # Display persons in a tree
 
 
 class Application(tkinter.Tk):
@@ -15,6 +19,18 @@ class Application(tkinter.Tk):
         self.style = Style('darkly')
         self.form = EntryForm(self)
         self.form.pack(fill='both', expand=True)
+
+        """Get Person - either Brian(0) or Tricia(1) from dialog box"""
+        self.pers = person.Person(0)
+
+        """Retrieve username and password"""
+        self.user: str = self.pers.get_username()
+        self.pw: str = self.pers.get_password()
+
+        """Login"""
+
+        self.browser = io.login(self.user, self.pw, FS_URL)
+        self.browser.set_window_size(1500, 1000)
 
 
 class EntryForm(ttk.Frame):
@@ -44,7 +60,7 @@ class EntryForm(ttk.Frame):
 
         # cancel button
         self.cancel = ttk.Button(self, text='Cancel', style='danger.TButton', command=self.quit)
-        self.cancel.grid(row=5, column=1, sticky='ew')
+        self.cancel.grid(row=5, column=1, sticky='ew', pady=10, padx=(0, 10))
 
     def print_form_data(self):
         print(self.fsurl.get(), self.fagurl.get(), self.plurl.get(), self.oldgrave.get())
